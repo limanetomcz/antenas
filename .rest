@@ -1,0 +1,13 @@
+###
+
+post http://localhost:8000/api/antenas
+Content-type: application/json
+Accept: application/json
+
+{
+    "descricao":"nome da antena",
+    "latitude":23,
+    "longitude":34,
+    "uf":"AL",
+    "altura":123
+}
