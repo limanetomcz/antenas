@@ -10,6 +10,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/antenaList.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -35,103 +37,9 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- As linhas serão preenchidas automaticamente pelo DataTables -->
+                
             </tbody>
         </table>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            // Valida o token antes de carregar a tabela
-            const token = localStorage.getItem('token');
-
-            if (token) {
-                $.ajax({
-                    url: 'http://localhost:8000/api/validate-token',
-                    type: 'GET',
-                    headers: { 'Authorization': `Bearer ${token}` },
-                    success: function(response) {
-                        // Token válido, carrega a tabela
-                        carregarTabela();
-                    },
-                    error: function() {
-                        // Token inválido, exibe alerta e redireciona para o login
-                        alert('Sessão expirada. Faça login novamente.');
-                        window.location.href = 'login.html';
-                    }
-                });
-            } else {
-                // Redireciona se não houver token
-                alert('Faça login para acessar esta página.');
-                window.location.href = 'login.html';
-            }
-
-            function carregarTabela() {
-                $('#antenaTable').DataTable({
-                    ajax: {
-                        url: 'http://localhost:8000/api/antenas',
-                        dataSrc: '',
-                        headers: { 'Authorization': `Bearer ${token}` }
-                    },
-                    columns: [
-                        { data: 'id' },
-                        { data: 'descricao' },
-                        { data: 'longitude' },
-                        { data: 'latitude' },
-                        { data: 'uf' },
-                        { data: 'altura' },
-                        { data: 'data_implantacao' },
-                        { 
-                            data: 'id',
-                            render: function(data, type, row) {
-                                return `
-                                    <a href="edit.html?id=${data}" class="btn btn-primary btn-sm mr-2">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-                                    <button class="btn btn-danger btn-sm delete-btn" data-id="${data}">
-                                        <i class="fas fa-trash"></i> Excluir
-                                    </button>
-                                `;
-                            }
-                        }
-                    ],
-                    language: {
-                        url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/Portuguese-Brasil.json"
-                    }
-                });
-            }
-
-            // Evento de exclusão
-            $('#antenaTable').on('click', '.delete-btn', function() {
-                const antenaId = $(this).data('id');
-                
-                if (confirm('Tem certeza que deseja remover esta antena?')) {
-                    $.ajax({
-                        url: `http://localhost:8000/api/antenas/${antenaId}`,
-                        type: 'DELETE',
-                        headers: { 'Authorization': `Bearer ${token}` },
-                        success: function(response) {
-                            alert('Antena removida com sucesso!');
-                            $('#antenaTable').DataTable().ajax.reload();
-                        },
-                        error: function() {
-                            alert('Erro ao remover antena.');
-                        }
-                    });
-                }
-            });
-
-            // Botão "Nova Antena"
-            $('#newAntenaButton').on('click', function() {
-                window.location.href = 'new.html';
-            });
-
-            // Botão "Sair"
-            $('#logoutButton').on('click', function() {
-                // Redireciona para a página de login
-                window.location.href = 'login.html';
-            });
-        });
-    </script>
 </body>
 </html>

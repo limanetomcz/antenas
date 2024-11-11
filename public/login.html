@@ -6,6 +6,8 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Inclui o arquivo login.js para o código específico de login -->
+    <script src="js/login.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -29,37 +31,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            localStorage.setItem('token', '');
-            $('#loginForm').on('submit', function(e) {
-                e.preventDefault();
-
-                const email = $('#email').val();
-                const password = $('#password').val();
-
-                $.ajax({
-                    url: 'http://localhost:8000/api/login',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ email: email, password: password }),
-                    success: function(response) {
-                        if (response.access_token) {
-                            // Armazena o token no localStorage
-                            localStorage.setItem('token', response.access_token);
-                            alert('Login bem-sucedido!');
-                            location.href='index.html';
-                            // Redireciona ou executa alguma outra ação
-                        }
-                    },
-                    error: function() {
-                        // Exibe mensagem de erro
-                        $('#loginError').show();
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
