@@ -5,9 +5,39 @@ Content-type: application/json
 Accept: application/json
 
 {
-    "descricao":"nome da antena",
+    "descricao":"nome da antena 3",
     "latitude":23,
     "longitude":34,
     "uf":"AL",
     "altura":123
 }
+
+###
+get http://localhost:8000/api/antenas
+Content-type: application/json
+Accept: application/json
+
+
+###
+get http://localhost:8000/api/antenas/68aca385-e0d1-497f-9e4c-7d828279012d
+Content-Type: application/json
+Accept: application/json
+
+###
+put http://localhost:8000/api/antenas/2b4ca26a-b44f-438a-a3aa-810688cbd135
+Content-Type: application/json
+Accept: application/json
+
+{
+    "descricao": "Antena Exemplo Atualizada2",
+    "latitude": 24,
+    "longitude": 43,
+    "uf": "RJ",
+    "altura": 65.5,
+    "data_implantacao": "2023-06-01"
+}
+
+###
+delete http://localhost:8000/api/antenas/2b4ca26a-b44f-438a-a3aa-810688cbd135
+Content-Type: application/json
+Accept: application/json
