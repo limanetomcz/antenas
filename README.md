@@ -1,66 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Avaliação Prática em PHP - Spassu</title>
+</head>
+<body>
+    <h1>Avaliação Prática em PHP - Spassu</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+    <p>Bem-vindo à minha solução para a avaliação prática em PHP! Este projeto foi desenvolvido em <strong>Laravel 11</strong> para o backend, atendendo aos requisitos e especificações descritos na avaliação.</p>
 
-## About Laravel
+    <h2>Índice</h2>
+    <ul>
+        <li><a href="#instalacao">Instalação</a></li>
+        <li><a href="#configuracao">Configuração</a></li>
+        <li><a href="#funcionalidades-implementadas">Funcionalidades Implementadas</a></li>
+        <li><a href="#modelo-de-dados">Modelo de Dados</a></li>
+        <li><a href="#apis-externas">APIs Externas</a></li>
+        <li><a href="#consideracoes-finais">Considerações Finais</a></li>
+        <li><a href="#links-uteis">Links Úteis</a></li>
+    </ul>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+    <hr>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    <h2 id="instalacao">Instalação</h2>
+    <ol>
+        <li>Clone o repositório para seu ambiente local:
+            <pre><code>git clone https://github.com/limanetomcz/antenas.git</code></pre>
+        </li>
+        <li>Navegue até a pasta do projeto:
+            <pre><code>cd nome-do-projeto</code></pre>
+        </li>
+        <li>Instale as dependências do projeto:
+            <pre><code>composer install</code></pre>
+        </li>
+        <li>Crie o arquivo <code>.env</code> com base no arquivo <code>.env.example</code>:
+            <pre><code>cp .env.example .env</code></pre>
+        </li>
+        <li>Gere uma chave de aplicação:
+            <pre><code>php artisan key:generate</code></pre>
+        </li>
+        <li>Configure as variáveis de ambiente no <code>.env</code>, como o banco de dados (exemplo com MySQL):
+            <pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mariadb
+DB_USERNAME=root
+DB_PASSWORD=123456</code></pre>
+        </li>
+        <li>Execute as migrações e seeders para criar e popular as tabelas:
+            <pre><code>php artisan migrate --seed</code></pre>
+        </li>
+    </ol>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    <h2 id="configuracao">Configuração</h2>
+    <ol>
+        <li><strong>JWT</strong>: Para autenticação, este projeto usa o JWT. Configure o JWT no <code>.env</code>:
+            <pre><code>JWT_SECRET=chave_do_seu_jwt</code></pre>
+        </li>
+        <li><strong>API do IBGE</strong>: O projeto utiliza a <a href="https://servicodados.ibge.gov.br/api/docs/localidades#api-UFs-estadosGet">API de localidades do IBGE</a> para listar os estados (UFs) no formulário de antenas.</li>
+        <li><strong>Executando o Projeto</strong>: Inicie o servidor local do Laravel:
+            <pre><code>php artisan serve</code></pre>
+        </li>
+    </ol>
 
-## Learning Laravel
+    <h2 id="funcionalidades-implementadas">Funcionalidades Implementadas</h2>
+    <ul>
+        <li><strong>Listagem de Antenas</strong>: Exibe uma lista completa de antenas cadastradas.</li>
+        <li><strong>Detalhes da Antena</strong>: Visualização de informações específicas de uma antena, incluindo foto e mapa com localização.</li>
+        <li><strong>Ranking de UFs</strong>: Apresenta as 5 UFs com mais antenas cadastradas.</li>
+        <li><strong>CRUD Completo de Antenas</strong>:
+            <ul>
+                <li><strong>Criação</strong>: Tela de cadastro de antenas com validação e seleção de UFs a partir da API do IBGE.</li>
+                <li><strong>Edição</strong>: Tela para edição de dados de uma antena existente, incluindo validações.</li>
+                <li><strong>Exclusão</strong>: Confirmação de exclusão antes de apagar um registro.</li>
+            </ul>
+        </li>
+        <li><strong>Carga de Dados</strong>: Script para carga massiva de até 100 mil registros de antenas.</li>
+        <li><strong>Autenticação e Autorização</strong>:
+            <ul>
+                <li><strong>Registro de Usuário</strong>: Cadastro de novos usuários.</li>
+                <li><strong>Login e Logout</strong>: Autenticação com geração de token JWT para acessar rotas protegidas.</li>
+            </ul>
+        </li>
+    </ul>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    <h2 id="modelo-de-dados">Modelo de Dados</h2>
+    <h3>Antenas</h3>
+    <ul>
+        <li><strong>id</strong>: UUID, chave primária.</li>
+        <li><strong>descricao</strong>: String, obrigatório, único, 10-100 caracteres.</li>
+        <li><strong>latitude</strong>: Decimal (-90 a 90), obrigatório.</li>
+        <li><strong>longitude</strong>: Decimal (-180 a 180), obrigatório.</li>
+        <li><strong>uf</strong>: String (2 caracteres), obrigatório.</li>
+        <li><strong>altura</strong>: Decimal, obrigatório, maior que 0.</li>
+        <li><strong>data_implantacao</strong>: Data, opcional.</li>
+        <li><strong>foto</strong>: String, caminho da imagem.</li>
+    </ul>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    <h3>Usuários</h3>
+    <ul>
+        <li><strong>id</strong>: Chave primária.</li>
+        <li><strong>nome</strong>: String, obrigatório.</li>
+        <li><strong>email</strong>: String, obrigatório, único, formato de e-mail válido.</li>
+        <li><strong>senha</strong>: String, obrigatório, entre 8 e 32 caracteres.</li>
+    </ul>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    <h2 id="apis-externas">APIs Externas</h2>
+    <p><strong>API do IBGE</strong>: Para a listagem das UFs na criação e edição de antenas. <a href="https://servicodados.ibge.gov.br/api/docs/localidades#api-UFs-estadosGet">Documentação aqui</a>.</p>
 
-## Laravel Sponsors
+    <h2 id="consideracoes-finais">Considerações Finais</h2>
+    <p>O projeto foi desenvolvido com o objetivo de atender aos requisitos da avaliação prática, priorizando padrões de código (PSR, SOLID) e qualidade de código (Clean Code). A aplicação inclui tratamento de erros e validações de entrada, com mensagens claras para o usuário.</p>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    <h3>Futuras Melhorias</h3>
+    <ul>
+        <li>Implementação de testes unitários e de integração.</li>
+        <li>Paginação na listagem de antenas para melhor desempenho.</li>
+        <li>Integração de um sistema de logs para monitoramento de atividades.</li>
+    </ul>
 
-### Premium Partners
+    <h2 id="links-uteis">Links Úteis</h2>
+    <ul>
+        <li><a href="https://servicodados.ibge.gov.br/api/docs/localidades#api-UFs-estadosGet">API de Localidades do IBGE</a></li>
+        <li><a href="https://getbootstrap.com">Bootstrap</a></li>
+        <li><a href="https://phpstan.org">PHP Stan</a></li>
+        <li><a href="https://www.php-fig.org/psr/psr-12">PSR-12: Estilo de código</a></li>
+        <li><a href="https://www.hostgator.com.br/blog/clean-code-o-que-e">Clean Code</a></li>
+    </ul>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    <p>Obrigado pelo seu tempo e atenção na avaliação deste projeto!</p>
+</body>
+</html>
