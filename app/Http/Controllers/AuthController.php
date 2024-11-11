@@ -41,4 +41,14 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
+
+    public function validateToken()
+    {
+        
+        if (auth('api')->check()) {
+            return response()->json(['message' => 'Token válido'], 200);
+        }
+    
+        return response()->json(['message' => 'Token inválido'], 401);
+    }
 }

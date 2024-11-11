@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Antena</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Editar Antena</h2>
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                <form id="editAntenaForm">
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" placeholder="Descrição da antena" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Longitude</label>
+                        <input type="text" class="form-control" id="longitude" placeholder="Longitude" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="latitude">Latitude</label>
+                        <input type="text" class="form-control" id="latitude" placeholder="Latitude" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uf">UF</label>
+                        <input type="text" class="form-control" id="uf" placeholder="UF" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="altura">Altura</label>
+                        <input type="number" class="form-control" id="altura" placeholder="Altura da antena" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="data_implantacao">Data de Implantação</label>
+                        <input type="date" class="form-control" id="data_implantacao" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Salvar Alterações</button>
+                </form>
+                <div id="updateMessage" class="alert mt-3" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const antenaId = urlParams.get('id');
+            const token = localStorage.getItem('token');
+
+            // Função para carregar os dados da antena
+            function carregarDadosAntena() {
+                $.ajax({
+                    url: `http://localhost:8000/api/antenas/${antenaId}`,
+                    type: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    success: function(data) {
+                        $('#descricao').val(data.descricao);
+                        $('#longitude').val(data.longitude);
+                        $('#latitude').val(data.latitude);
+                        $('#uf').val(data.uf);
+                        $('#altura').val(data.altura);
+                        $('#data_implantacao').val(data.data_implantacao);
+                    },
+                    error: function() {
+                        alert('Erro ao carregar os dados da antena.');
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+
+            // Carrega os dados da antena ao abrir a página
+            carregarDadosAntena();
+
+            // Envia a atualização da antena
+            $('#editAntenaForm').on('submit', function(e) {
+                e.preventDefault();
+
+                const antenaData = {
+                    descricao: $('#descricao').val(),
+                    longitude: $('#longitude').val(),
+                    latitude: $('#latitude').val(),
+                    uf: $('#uf').val(),
+                    altura: $('#altura').val(),
+                    data_implantacao: $('#data_implantacao').val()
+                };
+
+                $.ajax({
+                    url: `http://localhost:8000/api/antenas/${antenaId}`,
+                    type: 'PUT',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify(antenaData),
+                    success: function() {
+                        $('#updateMessage').removeClass('alert-danger').addClass('alert-success').text('Antena atualizada com sucesso!').show();
+                    },
+                    error: function() {
+                        $('#updateMessage').removeClass('alert-success').addClass('alert-danger').text('Erro ao atualizar a antena.').show();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
