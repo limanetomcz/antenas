@@ -58,11 +58,9 @@ $(document).ready(function() {
                 { 
                     data: 'foto',
                     render: function(data, type, row) {
-                        if (data) {
-                            return `<a href="#" class="ver-foto-link" data-foto="/storage/${data}">Ver Foto</a>`;
-                        } else {
-                            return "Sem Foto";
-                        }
+                        const verFotoLink = data ? `<a href="#" class="ver-foto-link" data-foto="/storage/${data}">Ver Foto</a>` : "Sem Foto";
+                        const verMapaLink = `<a href="#" class="ver-mapa-link" data-lat="${row.latitude}" data-lng="${row.longitude}">Ver Mapa</a>`;
+                        return `${verFotoLink} | ${verMapaLink}`;
                     }
                 },
                 { 
@@ -79,9 +77,6 @@ $(document).ready(function() {
                     }
                 }
             ],
-            language: {
-                "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/Portuguese-Brasil.json"
-            }
         });
     }
 
@@ -92,6 +87,37 @@ $(document).ready(function() {
         
         $('#fotoModalImage').attr('src', fotoUrl);
         $('#fotoModal').modal('show');
+    });
+
+    $('#antenaTable').on('click', '.ver-mapa-link', function(e) {
+        e.preventDefault();
+        
+        const lat = $(this).data('lat');
+        const lng = $(this).data('lng');
+
+        // Mostra o modal do mapa
+        $('#mapModal').modal('show');
+
+        // Inicializa o mapa ao abrir o modal, apenas uma vez
+        $('#mapModal').on('shown.bs.modal', function () {
+            const map = L.map('mapContainer').setView([lat, lng], 15);
+
+            // Adiciona os tiles do OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            // Adiciona um marcador na localização da antena
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup("Localização da Antena")
+                .openPopup();
+
+            // Remove o mapa ao fechar o modal para evitar múltiplas instâncias
+            $('#mapModal').on('hidden.bs.modal', function() {
+                map.remove();
+            });
+        });
     });
 
     $('#newAntenaButton').on('click', function() {
