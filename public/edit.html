@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
     <script src="js/auth.js"></script>
     <script src="js/edit.js"></script>
     <script src="js/estados.js"></script>
@@ -43,6 +46,7 @@
                         <label for="data_implantacao">Data de Implantação</label>
                         <input type="date" class="form-control" id="data_implantacao" required>
                     </div>
+                    <div id="mapContainer" style="height: 300px; margin-bottom: 20px;"></div>
                     <div class="form-group">
                         <label>Foto Atual</label>
                         <div id="fotoAtualContainer">

@@ -21,6 +21,8 @@ $(document).ready(function() {
                 } else {
                     $('#fotoAtualContainer').hide();
                 }
+                console.log(data.latitude, data.longitude);
+                carregarMapa(data.latitude, data.longitude);
             },
             error: function() {
                 alert('Erro ao carregar os dados da antena.');
@@ -72,4 +74,26 @@ $(document).ready(function() {
     $('#backButton').on('click', function() {
         window.location.href = 'index.html';
     });
+
+    function carregarMapa(latitude, longitude) {
+        const map = L.map('mapContainer').setView([latitude, longitude], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        const marker = L.marker([latitude, longitude]).addTo(map)
+            .bindPopup("Localização da Antena")
+            .openPopup();
+
+        $('#latitude, #longitude').on('input', function() {
+            const lat = parseFloat($('#latitude').val());
+            const lng = parseFloat($('#longitude').val());
+            if (!isNaN(lat) && !isNaN(lng)) {
+                map.setView([lat, lng], 15);
+                marker.setLatLng([lat, lng]);
+            }
+        });
+    }
 });
