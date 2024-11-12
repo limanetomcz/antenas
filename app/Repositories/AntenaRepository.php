@@ -12,5 +12,16 @@ class AntenaRepository extends BaseRepository implements AntenaRepositoryInterfa
         parent::__construct($model);
     }
 
-}
+    public function create(array $data)
+    {
 
+        if (isset($data['foto']) && $data['foto'] instanceof \Illuminate\Http\UploadedFile) {
+
+            $path = $data['foto']->store('antenas/fotos', 'public');
+
+            $data['foto'] = $path;
+        }
+
+        return $this->model->create($data);
+    }
+}

@@ -23,6 +23,9 @@ class AntenaService implements AntenaServiceInterface
 
     public function createAntena(array $data)
     {
+        if (request()->hasFile('foto')) {
+            $data['foto'] = request()->file('foto'); 
+        }
         return $this->repository->create($data);
     }
 

@@ -1,5 +1,3 @@
-// new.js
-
 $(document).ready(function() {
     validarToken(inicializarFormulario);
 
@@ -10,7 +8,6 @@ $(document).ready(function() {
             const token = localStorage.getItem('token');
             const formData = new FormData(this);
 
-            // Inclui outros dados do formulário manualmente
             formData.append('descricao', $('#descricao').val());
             formData.append('longitude', $('#longitude').val());
             formData.append('latitude', $('#latitude').val());
@@ -25,8 +22,8 @@ $(document).ready(function() {
                     'Authorization': `Bearer ${token}`
                 },
                 data: formData,
-                processData: false, // Impede o jQuery de processar o data
-                contentType: false, // Deixa o contentType como undefined, necessário para o envio de FormData
+                processData: false, 
+                contentType: false, 
                 success: function() {
                     $('#createMessage').removeClass('alert-danger').addClass('alert-success').text('Antena criada com sucesso!').show();
                     setTimeout(() => {
