@@ -20,7 +20,7 @@ class AntenaController extends Controller
 
     public function show($id)
     {
-        return $this->service->findAntenaById($id);
+        return $this->service->findById($id);
     }
 
     public function store(Request $request)
@@ -31,7 +31,7 @@ class AntenaController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $result = $this->service->createAntena($validator->validated());
+        $result = $this->service->create($validator->validated());
 
         return response()->json($result, 201);
     }
@@ -44,14 +44,14 @@ class AntenaController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $result = $this->service->updateAntena($id, $validator->validated());
+        $result = $this->service->update($id, $validator->validated());
 
         return response()->json($result);
     }
 
     public function destroy($id)
     {
-        $this->service->deleteAntena($id);
+        $this->service->delete($id);
         return response()->json(['message' => 'Antena deletada com sucesso.'], 200);
     }
 }

@@ -2,7 +2,7 @@ $(document).ready(function() {
     validarToken(inicializarFormulario);
 
     function inicializarFormulario() {
-        $('#createAntenaForm').on('submit', function(e) {
+        $('#createForm').on('submit', function(e) {
             e.preventDefault();
 
             const token = localStorage.getItem('token');

@@ -6,6 +6,7 @@
     <title>Editar Antena</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/edit.js"></script>
 </head>
@@ -14,7 +15,7 @@
         <h2 class="mb-4 text-center">Editar Antena</h2>
         <div class="card mx-auto" style="max-width: 600px;">
             <div class="card-body">
-                <form id="editAntenaForm">
+                <form id="editAntenaForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="descricao">Descrição</label>
                         <input type="text" class="form-control" id="descricao" placeholder="Descrição da antena" required>
@@ -38,6 +39,18 @@
                     <div class="form-group">
                         <label for="data_implantacao">Data de Implantação</label>
                         <input type="date" class="form-control" id="data_implantacao" required>
+                    </div>
+                    <!-- Exibir a foto atual -->
+                    <div class="form-group">
+                        <label>Foto Atual</label>
+                        <div id="fotoAtualContainer">
+                            <img id="fotoAtual" src="" alt="Foto Atual" class="img-fluid mb-2" style="max-height: 200px;">
+                        </div>
+                    </div>
+                    <!-- Campo para carregar uma nova foto -->
+                    <div class="form-group">
+                        <label for="foto">Nova Foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Salvar Alterações</button>
                     <button type="button" class="btn btn-secondary btn-block" id="backButton">Voltar</button>

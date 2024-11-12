@@ -21,6 +21,16 @@ $(document).ready(function() {
                 { data: 'altura' },
                 { data: 'data_implantacao' },
                 { 
+                    data: 'foto',
+                    render: function(data, type, row) {
+                        if (data) {
+                            return `<a href="#" class="ver-foto-link" data-foto="/storage/${data}">Ver Foto</a>`;
+                        } else {
+                            return "Sem Foto";
+                        }
+                    }
+                },
+                { 
                     data: 'id',
                     render: function(data, type, row) {
                         return `
@@ -35,47 +45,20 @@ $(document).ready(function() {
                 }
             ],
             language: {
-                "decimal": ",",
-                "thousands": ".",
-                "loadingRecords": "Carregando...",
-                "lengthMenu": "Exibir _MENU_ registros por página",
-                "zeroRecords": "Nenhum registro encontrado",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                "infoEmpty": "Nenhum registro disponível",
-                "infoFiltered": "(filtrado de _MAX_ registros no total)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primeiro",
-                    "last": "Último",
-                    "next": "Próximo",
-                    "previous": "Anterior"
-                },
-                "aria": {
-                    "sortAscending": ": ativar para ordenar a coluna em ordem crescente",
-                    "sortDescending": ": ativar para ordenar a coluna em ordem decrescente"
-                }
+                "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/Portuguese-Brasil.json"
             }
         });
     }
 
-    $('#antenaTable').on('click', '.delete-btn', function() {
-        const antenaId = $(this).data('id');
-        const token = localStorage.getItem('token');
+    // Evento para abrir o modal com a foto
+    $('#antenaTable').on('click', '.ver-foto-link', function(e) {
+        e.preventDefault();
+
+        const fotoUrl = $(this).data('foto');
         
-        if (confirm('Tem certeza que deseja remover esta antena?')) {
-            $.ajax({
-                url: `http://localhost:8000/api/antenas/${antenaId}`,
-                type: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` },
-                success: function(response) {
-                    alert('Antena removida com sucesso!');
-                    $('#antenaTable').DataTable().ajax.reload();
-                },
-                error: function() {
-                    alert('Erro ao remover antena.');
-                }
-            });
-        }
+        // Configura a URL da imagem no modal e exibe o modal
+        $('#fotoModalImage').attr('src', fotoUrl);
+        $('#fotoModal').modal('show');
     });
 
     $('#newAntenaButton').on('click', function() {

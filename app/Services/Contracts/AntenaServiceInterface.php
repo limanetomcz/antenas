@@ -6,11 +6,11 @@ interface AntenaServiceInterface
 {
     public function getAll();
 
-    public function findAntenaById($id);
+    public function findById($id);
 
-    public function createAntena(array $data);
+    public function create(array $data);
 
-    public function updateAntena($id, array $data);
+    public function update($id, array $data);
 
-    public function deleteAntena($id);
+    public function delete($id);
 }

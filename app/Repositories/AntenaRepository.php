@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Antena;
 use App\Repositories\Contracts\AntenaRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class AntenaRepository extends BaseRepository implements AntenaRepositoryInterface
 {
@@ -23,5 +24,25 @@ class AntenaRepository extends BaseRepository implements AntenaRepositoryInterfa
         }
 
         return $this->model->create($data);
+    }
+
+    public function update($id, array $data)
+    {
+        
+        $antena = $this->model->findOrFail($id);
+
+        if (isset($data['foto']) && $data['foto'] instanceof \Illuminate\Http\UploadedFile) {
+            
+            if ($antena->foto) {
+                Storage::disk('public')->delete($antena->foto);
+            }
+
+            $path = $data['foto']->store('antenas/fotos', 'public');
+            $data['foto'] = $path;
+        }
+
+        $antena->update($data);
+
+        return $antena;
     }
 }
