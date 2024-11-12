@@ -14,4 +14,6 @@ interface AntenaRepositoryInterface
 
     public function delete(String $id);
 
+    public function dashRanking();
+
 }

@@ -18,6 +18,11 @@ class AntenaController extends Controller
         return $this->service->getAll();
     }
 
+    public function dashRanking()
+    {
+        return $this->service->dashRanking();
+    }
+
     public function show($id)
     {
         return $this->service->findById($id);

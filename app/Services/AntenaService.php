@@ -48,4 +48,9 @@ class AntenaService implements AntenaServiceInterface
     {
         return $this->repository->delete($id);
     }
+
+    public function dashRanking() 
+    {
+        return $this->repository->dashRanking();
+    }
 }

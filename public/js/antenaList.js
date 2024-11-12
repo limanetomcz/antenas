@@ -1,7 +1,42 @@
 // antenaList.js
 
 $(document).ready(function() {
-    validarToken(carregarTabela);
+    validarToken(inicializarAplicacao);
+
+    function inicializarAplicacao() {
+        carregarRanking();
+        carregarTabela();
+    }
+
+    function carregarRanking() {
+        const token = localStorage.getItem('token');
+        
+        $.ajax({
+            url: 'http://localhost:8000/api/dash-ranking',
+            type: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` },
+            success: function(data) {
+                const rankingContainer = $('#rankingContainer');
+                rankingContainer.empty(); // Limpa o container antes de adicionar os dados
+
+                data.forEach((item, index) => {
+                    rankingContainer.append(`
+                        <div class="col-md-2">
+                            <div class="card mb-2">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title">${index + 1}º - ${item.uf}</h6>
+                                    <p class="card-text">${item.quantidade} Antenas</p>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            },
+            error: function() {
+                alert('Erro ao carregar o ranking de UFs.');
+            }
+        });
+    }
 
     function carregarTabela() {
         const token = localStorage.getItem('token');
@@ -50,13 +85,11 @@ $(document).ready(function() {
         });
     }
 
-    // Evento para abrir o modal com a foto
     $('#antenaTable').on('click', '.ver-foto-link', function(e) {
         e.preventDefault();
 
         const fotoUrl = $(this).data('foto');
         
-        // Configura a URL da imagem no modal e exibe o modal
         $('#fotoModalImage').attr('src', fotoUrl);
         $('#fotoModal').modal('show');
     });

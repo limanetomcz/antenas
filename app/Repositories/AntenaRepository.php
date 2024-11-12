@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Antena;
 use App\Repositories\Contracts\AntenaRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AntenaRepository extends BaseRepository implements AntenaRepositoryInterface
@@ -28,11 +29,11 @@ class AntenaRepository extends BaseRepository implements AntenaRepositoryInterfa
 
     public function update($id, array $data)
     {
-        
+
         $antena = $this->model->findOrFail($id);
 
         if (isset($data['foto']) && $data['foto'] instanceof \Illuminate\Http\UploadedFile) {
-            
+
             if ($antena->foto) {
                 Storage::disk('public')->delete($antena->foto);
             }
@@ -44,5 +45,17 @@ class AntenaRepository extends BaseRepository implements AntenaRepositoryInterfa
         $antena->update($data);
 
         return $antena;
+    }
+
+    public function dashRanking()
+    {
+        $ranking = $this->model
+            ->select('uf', DB::raw('COUNT(*) as quantidade'))
+            ->groupBy('uf')
+            ->orderByDesc('quantidade')
+            ->limit(5)
+            ->get();
+
+        return response()->json($ranking);
     }
 }
