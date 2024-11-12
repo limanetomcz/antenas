@@ -14,7 +14,7 @@
         <h2 class="mb-4 text-center">Criar Nova Antena</h2>
         <div class="card mx-auto" style="max-width: 600px;">
             <div class="card-body">
-                <form id="createAntenaForm">
+                <form id="createAntenaForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="descricao">Descrição</label>
                         <input type="text" class="form-control" id="descricao" placeholder="Descrição da antena" required>
@@ -39,7 +39,12 @@
                         <label for="data_implantacao">Data de Implantação</label>
                         <input type="date" class="form-control" id="data_implantacao" required>
                     </div>
+                    <div class="form-group">
+                        <label for="foto">Foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                    </div>
                     <button type="submit" class="btn btn-success btn-block">Salvar Antena</button>
+                    <button type="button" class="btn btn-secondary btn-block" id="backButton">Voltar</button>
                 </form>
                 <div id="createMessage" class="alert mt-3" style="display: none;"></div>
             </div>
