@@ -15,7 +15,7 @@ $(document).ready(function() {
             headers: { 'Authorization': `Bearer ${token}` },
             success: function(data) {
                 const rankingContainer = $('#rankingContainer');
-                rankingContainer.empty(); // Limpa o container antes de adicionar os dados
+                rankingContainer.empty(); 
 
                 data.forEach((item, index) => {
                     rankingContainer.append(`
@@ -77,6 +77,29 @@ $(document).ready(function() {
             ],
         });
     }
+
+    $('#antenaTable').on('click', '.delete-btn', function(e) {
+        e.preventDefault();
+
+        const antenaId = $(this).data('id');
+        const token = localStorage.getItem('token');
+
+        if (confirm('Tem certeza que deseja excluir esta antena?')) {
+            $.ajax({
+                url: `http://localhost:8000/api/antenas/${antenaId}`,
+                type: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` },
+                success: function() {
+                    alert('Antena excluída com sucesso!');
+                    $('#antenaTable').DataTable().ajax.reload(); 
+                    carregarRanking();
+                },
+                error: function() {
+                    alert('Erro ao excluir a antena.');
+                }
+            });
+        }
+    });
 
     $('#antenaTable').on('click', '.ver-foto-link', function(e) {
         e.preventDefault();

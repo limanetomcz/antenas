@@ -1,6 +1,5 @@
 $(document).ready(function() {
     validarToken(inicializarFormulario);
-
     function inicializarFormulario() {
         $('#createForm').on('submit', function(e) {
             e.preventDefault();
@@ -40,4 +39,5 @@ $(document).ready(function() {
     document.getElementById('backButton').addEventListener('click', function() {
         window.location.href = 'index.html';
     });
+
 });
