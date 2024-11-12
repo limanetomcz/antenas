@@ -1,11 +1,8 @@
-// edit.js
-
 $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const antenaId = urlParams.get('id');
     const token = localStorage.getItem('token');
 
-    // Função para carregar os dados da antena
     function carregarDadosAntena() {
         $.ajax({
             url: `http://localhost:8000/api/antenas/${antenaId}`,
@@ -19,7 +16,6 @@ $(document).ready(function() {
                 $('#altura').val(data.altura);
                 $('#data_implantacao').val(data.data_implantacao);
 
-                // Exibe a foto atual, se existir
                 if (data.foto) {
                     $('#fotoAtual').attr('src', `/storage/${data.foto}`);
                 } else {
@@ -35,11 +31,9 @@ $(document).ready(function() {
 
     carregarDadosAntena();
 
-    // Envia os dados do formulário de edição
     $('#editAntenaForm').on('submit', function(e) {
         e.preventDefault();
 
-        // Criando o FormData manualmente para garantir que todos os dados sejam incluídos
         const formData = new FormData();
         formData.append('descricao', $('#descricao').val());
         formData.append('longitude', $('#longitude').val());
@@ -47,9 +41,8 @@ $(document).ready(function() {
         formData.append('uf', $('#uf').val());
         formData.append('altura', $('#altura').val());
         formData.append('data_implantacao', $('#data_implantacao').val());
-        formData.append('_method', 'PUT'); // Laravel reconhece como uma atualização
+        formData.append('_method', 'PUT'); 
 
-        // Adiciona o arquivo de foto, se houver
         const fotoFile = $('#foto')[0].files[0];
         if (fotoFile) {
             formData.append('foto', fotoFile);
@@ -67,7 +60,7 @@ $(document).ready(function() {
             success: function() {
                 $('#updateMessage').removeClass('alert-danger').addClass('alert-success').text('Antena atualizada com sucesso!').show();
                 setTimeout(() => {
-                    window.location.href = 'index.html'; // Redireciona após salvar
+                    window.location.href = 'index.html'; 
                 }, 1500);
             },
             error: function() {
@@ -76,7 +69,6 @@ $(document).ready(function() {
         });
     });
 
-    // Botão "Voltar"
     $('#backButton').on('click', function() {
         window.location.href = 'index.html';
     });

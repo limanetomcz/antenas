@@ -1,5 +1,3 @@
-// antenaList.js
-
 $(document).ready(function() {
     validarToken(inicializarAplicacao);
 
@@ -95,25 +93,20 @@ $(document).ready(function() {
         const lat = $(this).data('lat');
         const lng = $(this).data('lng');
 
-        // Mostra o modal do mapa
         $('#mapModal').modal('show');
 
-        // Inicializa o mapa ao abrir o modal, apenas uma vez
         $('#mapModal').on('shown.bs.modal', function () {
             const map = L.map('mapContainer').setView([lat, lng], 15);
 
-            // Adiciona os tiles do OpenStreetMap
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '© OpenStreetMap'
             }).addTo(map);
 
-            // Adiciona um marcador na localização da antena
-            L.marker([lat, lng]).addTo(map)
+              L.marker([lat, lng]).addTo(map)
                 .bindPopup("Localização da Antena")
                 .openPopup();
 
-            // Remove o mapa ao fechar o modal para evitar múltiplas instâncias
             $('#mapModal').on('hidden.bs.modal', function() {
                 map.remove();
             });
